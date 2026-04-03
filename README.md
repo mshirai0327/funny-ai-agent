@@ -29,22 +29,39 @@ cd claude-notify && vsce package
 
 F5 でExtension Development Hostを起動してデバッグ可能。
 
+## Claude Code hook の設定（必須）
+
+`~/.claude/settings.json` に `Stop` hook を追加してください。
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "touch ~/.claude/notify-trigger"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Claude Code の応答完了時に `~/.claude/notify-trigger` が更新され、VSCode 拡張がそれを検知してポップアップを表示します。
+
 ## 設定
 
 | キー | 型 | デフォルト | 説明 |
 |------|----|-----------|------|
 | `claudeNotify.character` | string | `"random"` | 表示キャラ（hana/kira/mochi/random）|
 | `claudeNotify.displayDuration` | number | `5000` | 表示時間（ミリ秒）|
-| `claudeNotify.triggerPatterns` | array | 下記参照 | 検知する文字列パターン |
-
-### デフォルトトリガーパターン
-
-```json
-["✓ Completed", "Task completed", "All done", "Cost:", "claude> $", "> Task complete"]
-```
 
 ## 仕組み
 
-- `onDidWriteTerminalData` — ターミナル出力を監視してパターンマッチ
+- `createFileSystemWatcher` — `~/.claude/notify-trigger` の更新を監視
 - `onDidEndTask` — VSCodeタスク完了イベントを監視
 - Webviewパネルで SVG アニメーション付きポップアップを表示（自動クローズ）

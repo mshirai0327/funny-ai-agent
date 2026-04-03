@@ -7,9 +7,6 @@
     "vscode": "^1.85.0"
   },
   "categories": ["Other"],
-  "enabledApiProposals": [
-    "terminalDataWriteEvent"
-  ],
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -24,19 +21,6 @@
     "configuration": {
       "title": "Claude Notify",
       "properties": {
-        "claudeNotify.triggerPatterns": {
-          "type": "array",
-          "items": { "type": "string" },
-          "default": [
-            "✓ Completed",
-            "Task completed",
-            "All done",
-            "Cost:",
-            "claude> $",
-            "> Task complete"
-          ],
-          "description": "Terminal output patterns that trigger the notification popup"
-        },
         "claudeNotify.character": {
           "type": "string",
           "enum": ["hana", "kira", "mochi", "random"],

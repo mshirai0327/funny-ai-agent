@@ -1,3 +1,5 @@
+const os = require('os');
+const path = require('path');
 const vscode = require('vscode');
 
 // Character definitions
@@ -107,11 +109,6 @@ function getCharacter(config) {
     return CHARACTERS[keys[Math.floor(Math.random() * keys.length)]];
   }
   return CHARACTERS[choice] || CHARACTERS.hana;
-}
-
-function extractMessage(raw) {
-  // Strip ANSI escape codes
-  return raw.replace(/\x1b\[[0-9;]*[mGKHF]/g, '').trim();
 }
 
 function buildWebviewHtml(character, message, duration) {
@@ -245,20 +242,18 @@ function activate(context) {
   });
   context.subscriptions.push(testCmd);
 
-  // Watch terminal output
-  const termDisposable = vscode.window.onDidWriteTerminalData(event => {
-    const config = vscode.workspace.getConfiguration('claudeNotify');
-    const patterns = config.get('triggerPatterns', []);
-    const text = extractMessage(event.data);
+  // Watch the Claude Code sentinel file touched by the Stop hook
+  const triggerFilePath = path.join(os.homedir(), '.claude', 'notify-trigger');
+  const watcher = vscode.workspace.createFileSystemWatcher(
+    new vscode.RelativePattern(
+      vscode.Uri.file(path.dirname(triggerFilePath)),
+      path.basename(triggerFilePath)
+    )
+  );
 
-    for (const pattern of patterns) {
-      if (text.includes(pattern)) {
-        showPopup(context, text.substring(0, 80));
-        break;
-      }
-    }
-  });
-  context.subscriptions.push(termDisposable);
+  watcher.onDidChange(() => showPopup(context, ''));
+  watcher.onDidCreate(() => showPopup(context, ''));
+  context.subscriptions.push(watcher);
 
   // Watch VSCode task completion
   const taskDisposable = vscode.tasks.onDidEndTask(event => {

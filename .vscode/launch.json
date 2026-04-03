@@ -6,8 +6,7 @@
       "type": "extensionHost",
       "request": "launch",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}",
-        "--enable-proposed-api=undefined_publisher.claude-notify"
+        "--extensionDevelopmentPath=${workspaceFolder}"
       ]
     }
   ]
