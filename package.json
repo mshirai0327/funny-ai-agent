@@ -1,0 +1,58 @@
+{
+  "name": "claude-notify",
+  "displayName": "Claude Notify",
+  "description": "Cute anime character popup notifications when AI coding tasks complete",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "claudeNotify.testPopup",
+        "title": "Claude Notify: Test Popup"
+      }
+    ],
+    "configuration": {
+      "title": "Claude Notify",
+      "properties": {
+        "claudeNotify.triggerPatterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [
+            "✓ Completed",
+            "Task completed",
+            "All done",
+            "Cost:",
+            "claude> $",
+            "> Task complete"
+          ],
+          "description": "Terminal output patterns that trigger the notification popup"
+        },
+        "claudeNotify.character": {
+          "type": "string",
+          "enum": ["hana", "kira", "mochi", "random"],
+          "default": "random",
+          "description": "Character to display in popup (random picks one each time)"
+        },
+        "claudeNotify.displayDuration": {
+          "type": "number",
+          "default": 5000,
+          "description": "How long (ms) the popup stays visible before auto-closing"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run lint",
+    "lint": "echo 'no linter configured'"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^2.22.0"
+  }
+}
