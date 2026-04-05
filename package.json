@@ -1,12 +1,21 @@
 {
   "name": "claude-notify",
+  "publisher": "mshirai0327",
   "displayName": "Claude Notify",
   "description": "Cute anime character popup notifications when AI coding tasks complete",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mshirai0327/funny-ai-agent.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": ["Other"],
+  "files": [
+    "src/**",
+    "README.md"
+  ],
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -36,6 +45,7 @@
     }
   },
   "scripts": {
+    "start": "npm --prefix claude-notify-app start",
     "vscode:prepublish": "npm run lint",
     "lint": "echo 'no linter configured'"
   },
