@@ -1,0 +1,8 @@
+Codex は最初に `AGENTS.md` を読んでください。
+
+このファイルは Codex 用の入口だけを置く薄いドキュメントです。共有ルールや実装の前提は `AGENTS.md` に集約します。
+
+補足:
+
+- `memo.md` は通常の仕様書ではありません
+- 変更時は `src/extension.js`、`package.json`、`README.md` の整合性を優先してください
