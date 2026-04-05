@@ -1,0 +1,12 @@
+{
+  "name": "claude-notify-app",
+  "version": "1.0.0",
+  "description": "Claude Notify - anime character popup for AI task completion",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^28.0.0"
+  }
+}
