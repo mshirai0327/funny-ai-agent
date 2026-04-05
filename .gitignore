@@ -1,1 +1,7 @@
 *.vsix
+
+# READMEどおりのローカルセットアップで生成されるもの
+node_modules/
+claude-notify-app/node_modules/
+package-lock.json
+claude-notify-app/package-lock.json
